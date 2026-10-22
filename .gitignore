@@ -6,3 +6,7 @@ build
 
 # Ignore Kotlin plugin data
 .kotlin
+
+# Configuration files containing credentials
+db.properties
+.env

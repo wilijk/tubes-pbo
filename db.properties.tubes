@@ -1,0 +1,9 @@
+# Supabase PostgreSQL Configuration Template
+# Copy file ini menjadi db.properties lalu isi dengan kredensial asli Anda
+
+# Supabase PostgreSQL Configuration
+db.host=db.lffyqmjkmmdcqodbunlx.supabase.co
+db.port=5432
+db.name=postgres
+db.user=postgres
+db.password=template
