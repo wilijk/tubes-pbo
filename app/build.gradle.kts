@@ -38,6 +38,12 @@ application {
     mainClass = "tubes.App"
 }
 
+// db.properties berada di root project, sedangkan secara default `gradle run`
+// berjalan dari folder app/ sehingga file tidak ditemukan.
+tasks.named<JavaExec>("run") {
+    workingDir = rootProject.projectDir
+}
+
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
