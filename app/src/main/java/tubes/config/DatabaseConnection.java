@@ -1,0 +1,32 @@
+package tubes.config;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DatabaseConnection {
+
+    public static final String URL = "jdbc:postgresql://" + AppConfig.HOST + ":" + AppConfig.PORT + "/" + AppConfig.DATABASE;
+
+    public static Connection getConnection() {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(URL, AppConfig.USER, AppConfig.PASSWORD);
+            System.out.println("Connected to PostgreSQL successfully!");
+        } catch (SQLException e) {
+            System.out.println("Connection failed.");
+            e.printStackTrace();
+        }
+        return conn;
+    }
+
+    public static void main(String[] args) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            if (conn != null) System.out.println("Connection successful using Database.connect()!");
+            else System.out.println("Failed to make connection!");
+        } catch (Exception e) {
+            System.out.println("Connection error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+}
