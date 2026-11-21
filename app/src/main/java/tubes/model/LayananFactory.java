@@ -3,25 +3,35 @@ package tubes.model;
 import tubes.exception.TransactionException;
 
 public class LayananFactory {
-    public static WnStore createLayanan(String jenis, String game, String id, double harga, String metode, String... data) throws TransactionException {
-        try {
-            if (jenis.equalsIgnoreCase("JOKI")) {
-                if (game.equalsIgnoreCase("ML")) {
-                    return new JokiML(id, harga, data[0], data[1], metode, 
-                                      Integer.parseInt(data[2]), Integer.parseInt(data[3]), Double.parseDouble(data[4]));
-                } else if (game.equalsIgnoreCase("GENSHIN")) {
-                    return new JokiGenshin(id, harga, data[0], data[1], metode, data[2]);
-                }
-            } else if (jenis.equalsIgnoreCase("TOPUP")) {
-                if (game.equalsIgnoreCase("ML")) {
-                    return new TopupML(id, harga, data[0], metode, data[1], Integer.parseInt(data[2]));
-                } else if (game.equalsIgnoreCase("GENSHIN")) {
-                    return new TopupGenshin(id, harga, data[0], metode, Integer.parseInt(data[1]));
-                }
-            }
-            throw new TransactionException("Jenis layanan atau game tidak valid.");
-        } catch (Exception e) {
-            throw new TransactionException("Format input parameter salah: " + e.getMessage());
+    public static Layanan buatJokiML(String customer, String idAkun,
+                                     RankTier awal, int divAwal, int btgAwal,
+                                     RankTier target, int divTarget, int btgTarget) throws TransactionException {
+        int posAwal = JokiML.hitungPosisiBintangGlobal(awal, divAwal, btgAwal);
+        int posTarget = JokiML.hitungPosisiBintangGlobal(target, divTarget, btgTarget);
+        if (posTarget <= posAwal) {
+            throw new TransactionException("Rank & Bintang target harus lebih tinggi dari posisi awal!");
         }
+        return new JokiML(customer, idAkun, awal, divAwal, btgAwal, target, divTarget, btgTarget);
+    }
+
+    public static Layanan buatJokiGenshin(String customer, String idAkun, int lvlAwal, int lvlTarget) throws TransactionException {
+        if (lvlAwal < 1 || lvlTarget > 60 || lvlTarget <= lvlAwal) {
+            throw new TransactionException("Adventure Rank Genshin valid adalah 1 - 60 dan target harus > awal!");
+        }
+        return new JokiGenshin(customer, idAkun, lvlAwal, lvlTarget);
+    }
+
+    public static Layanan buatTopupML(String customer, String idAkun, int diamond) throws TransactionException {
+        if (diamond <= 0) {
+            throw new TransactionException("Jumlah Diamond harus lebih dari 0!");
+        }
+        return new TopupML(customer, idAkun, diamond);
+    }
+
+    public static Layanan buatTopupGenshin(String customer, String idAkun, int primogem) throws TransactionException {
+        if (primogem <= 0) {
+            throw new TransactionException("Jumlah Primogem harus lebih dari 0!");
+        }
+        return new TopupGenshin(customer, idAkun, primogem);
     }
 }
