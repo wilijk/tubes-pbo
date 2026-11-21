@@ -13,6 +13,3 @@ db.properties
 
 #ignore config
 app/src/main/java/tubes/config/AppConfig.java
-
-#ignore config
-app/src/main/java/tubes/config/AppConfig.java
