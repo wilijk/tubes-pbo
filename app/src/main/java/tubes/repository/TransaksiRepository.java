@@ -59,4 +59,14 @@ public class TransaksiRepository implements BaseRepository<TransaksiRecord> {
             rs.getString("status")
         );
     } 
+
+    public void assignWorker(int idTransaksi, String workerUsername) throws Exception {
+        String sql = "UPDATE transaksi SET worker_username = ? WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, workerUsername);
+            stmt.setInt(2, idTransaksi);
+            stmt.executeUpdate();
+        }
+    }
 }
