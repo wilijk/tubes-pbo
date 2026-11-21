@@ -69,4 +69,23 @@ public class TransaksiRepository implements BaseRepository<TransaksiRecord> {
             stmt.executeUpdate();
         }
     }
+
+    public void updateStatus(int idTransaksi, String statusBaru) throws Exception {
+        String sql = "UPDATE transaksi SET status = ? WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, statusBaru);
+            stmt.setInt(2, idTransaksi);
+            stmt.executeUpdate();
+        }
+    }
+
+    public void hapus(int idTransaksi) throws Exception {
+        String sql = "DELETE FROM transaksi WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idTransaksi);
+            stmt.executeUpdate();
+        }
+    }
 }
