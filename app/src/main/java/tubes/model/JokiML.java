@@ -1,63 +1,96 @@
 package tubes.model;
 
-public class JokiML extends Joki implements Calculable {
-    private int totalMatch;
-    private int totalMenang;
-    private double targetWinRate;
+public class JokiML extends Joki {
+    private RankTier rankAwal;
+    private int divisiAwal;
+    private int bintangAwal;
 
-    public JokiML(String idTransaksi, double hargaDasar, String akunGame, String password, 
-                  String metodePembayaran, int totalMatch, int totalMenang, double targetWinRate) {
-        super(idTransaksi, hargaDasar, akunGame, password, metodePembayaran);
-        this.totalMatch = totalMatch;
-        this.totalMenang = totalMenang;
-        this.targetWinRate = targetWinRate;
+    private RankTier rankTarget;
+    private int divisiTarget;
+    private int bintangTarget;
+
+    public JokiML(String customerUsername, String idAkunGame,
+                  RankTier rankAwal, int divisiAwal, int bintangAwal,
+                  RankTier rankTarget, int divisiTarget, int bintangTarget) {
+        super(customerUsername, "Mobile Legends", idAkunGame);
+        this.rankAwal = rankAwal;
+        this.divisiAwal = divisiAwal;
+        this.bintangAwal = bintangAwal;
+        this.rankTarget = rankTarget;
+        this.divisiTarget = divisiTarget;
+        this.bintangTarget = bintangTarget;
     }
 
-    @Override
-    public double hitungWinRateSaatIni(int totalMatch, int totalMenang) {
-        if (totalMatch <= 0) return 0.0;
-        return ((double) totalMenang / totalMatch) * 100.0;
-    }
+    public static int hitungPosisiBintangGlobal(RankTier rank, int divisi, int bintang) {
+        RankTier[] semuaRank = RankTier.values();
+        int totalBintang = 0;
 
-    @Override
-    public int hitungKemenanganDibutuhkan(int totalMatch, int totalMenang, double targetWinRate) {
-        if (targetWinRate >= 100.0) return 0;
-        double targetDesimal = targetWinRate / 100.0;
-        double wrSekarang = (double) totalMenang / totalMatch;
+        for (int i = 0; i < semuaRank.length; i++) {
+            if (semuaRank[i] == rank) {
+                break;
+            }
+            totalBintang += semuaRank[i].getJumlahDivisi() * semuaRank[i].getBintangPerDivisi();
+        }
 
-        if (targetDesimal <= wrSekarang) return 0;
-
-        double butuhMenang = ((targetDesimal * totalMatch) - totalMenang) / (1.0 - targetDesimal);
-        return (int) Math.ceil(butuhMenang);
-    }
-
-    @Override
-    public double hitungFaktorKesulitan(int totalMatch) {
-        if (totalMatch > 2000) return 1.5;
-        if (totalMatch > 1000) return 1.25;
-        if (totalMatch > 500) return 1.1;
-        return 1.0;
+        if (rank.punyaDivisi()) {
+            int divisiSelesai = rank.getJumlahDivisi() - divisi;
+            totalBintang += (divisiSelesai * rank.getBintangPerDivisi()) + bintang;
+        } else {
+            totalBintang += bintang;
+        }
+        return totalBintang;
     }
 
     @Override
     public double hitungTotalHarga() {
-        int winNeeded = hitungKemenanganDibutuhkan(totalMatch, totalMenang, targetWinRate);
-        double multiplier = hitungFaktorKesulitan(totalMatch);
-        return (winNeeded * hargaDasar) * multiplier;
+        int posAwal = hitungPosisiBintangGlobal(rankAwal, divisiAwal, bintangAwal);
+        int posTarget = hitungPosisiBintangGlobal(rankTarget, divisiTarget, bintangTarget);
+
+        RankTier[] semuaRank = RankTier.values();
+        double totalHarga = 0;
+        int cursorBintang = 0;
+
+        for (int i = 0; i < semuaRank.length; i++) {
+            int kapasitasTier = semuaRank[i].getJumlahDivisi() * semuaRank[i].getBintangPerDivisi();
+            for (int b = 0; b < kapasitasTier; b++) {
+                if (cursorBintang >= posAwal && cursorBintang < posTarget) {
+                    totalHarga += semuaRank[i].getHargaPerBintang();
+                }
+                cursorBintang++;
+            }
+        }
+        return totalHarga;
     }
 
     @Override
-    public String getOrderDetails() {
-        int winNeeded = hitungKemenanganDibutuhkan(totalMatch, totalMenang, targetWinRate);
-        return "=== ORDER DETAILS [JOKI WIN RATE ML] ===\n" +
-               "ID Transaksi   : " + idTransaksi + "\n" +
-               "Akun Game      : " + akunGame + "\n" +
-               "Match / Win    : " + totalMatch + " / " + totalMenang + "\n" +
-               "WR Saat Ini    : " + String.format("%.2f", hitungWinRateSaatIni(totalMatch, totalMenang)) + "%\n" +
-               "Target WR      : " + targetWinRate + "%\n" +
-               "Win Dibutuhkan : " + winNeeded + " Match\n" +
-               "Metode Bayar   : " + getMetodePembayaran() + "\n" +
-               "Status         : " + status + "\n" +
-               "Total Harga    : Rp " + hitungTotalHarga();
+    public String getDeskripsiLayanan() {
+        String strAwal;
+        if (rankAwal.punyaDivisi()) {
+            strAwal = rankAwal.getNamaRank() + " " + divisiAwal + " (*" + bintangAwal + ")";
+        } else {
+            strAwal = rankAwal.getNamaRank() + " (*" + getDisplayBintangMythic(rankAwal, bintangAwal) + ")";
+        }
+
+        String strTarget;
+        if (rankTarget.punyaDivisi()) {
+            strTarget = rankTarget.getNamaRank() + " " + divisiTarget + " (*" + bintangTarget + ")";
+        } else {
+            strTarget = rankTarget.getNamaRank() + " (*" + getDisplayBintangMythic(rankTarget, bintangTarget) + ")";
+        }
+
+        return "Joki ML: " + strAwal + " -> " + strTarget;
+    }
+
+    private int getDisplayBintangMythic(RankTier tier, int bintangOffset) {
+        if (tier == RankTier.MYTHICAL_HONOR) {
+            return 25 + bintangOffset;
+        }
+        if (tier == RankTier.MYTHICAL_GLORY) {
+            return 50 + bintangOffset;
+        }
+        if (tier == RankTier.MYTHICAL_IMMORTAL) {
+            return 100 + bintangOffset;
+        }
+        return bintangOffset;
     }
 }

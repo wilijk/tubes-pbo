@@ -10,3 +10,6 @@ build
 # Configuration files containing credentials
 db.properties
 .env
+
+#ignore config
+app/src/main/java/tubes/config/AppConfig.java

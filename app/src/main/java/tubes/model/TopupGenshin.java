@@ -1,25 +1,17 @@
 package tubes.model;
 
 public class TopupGenshin extends Topup {
-    private int jumlahGenesis;
-
-    public TopupGenshin(String idTransaksi, double hargaDasar, String userIdGame, String metodePembayaran, int jumlahGenesis) {
-        super(idTransaksi, hargaDasar, userIdGame, metodePembayaran);
-        this.jumlahGenesis = jumlahGenesis;
+    public TopupGenshin(String customerUsername, String idAkunGame, int jumlahPrimogem) {
+        super(customerUsername, "Genshin Impact", idAkunGame, jumlahPrimogem);
     }
 
     @Override
     public double hitungTotalHarga() {
-        return hargaDasar;
+        return jumlahItem * 250;
     }
 
     @Override
-    public String getOrderDetails() {
-        return "=== ORDER DETAILS [TOPUP GENSHIN] ===\n" +
-               "ID Transaksi : " + idTransaksi + "\n" +
-               "User ID GI   : " + userIdGame + "\n" +
-               "Genesis      : " + jumlahGenesis + "\n" +
-               "Metode Bayar : " + getMetodePembayaran() + "\n" +
-               "Total Harga  : Rp " + hitungTotalHarga();
+    public String getDeskripsiLayanan() {
+        return "Top Up " + jumlahItem + " Primogems Genshin";
     }
 }
