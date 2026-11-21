@@ -43,22 +43,22 @@ public class TransaksiRepository implements BaseRepository<TransaksiRecord> {
         }
         return list;
     }
+    
 
-    private TransaksiRecord mapRow(ResultSet rs) throws Exception {
-        return new TransaksiRecord(
-            rs.getInt("id"),
-            rs.getString("customer_username"),
-            rs.getString("worker_username"),
-            rs.getString("jenis_layanan"),
-            rs.getString("nama_game"),
-            rs.getString("id_akun_game"),
-            rs.getString("detail_pesanan"),
-            rs.getDouble("total_harga"),
-            rs.getString("metode_pembayaran"),
-            rs.getString("nomor_virtual"),
-            rs.getString("status")
-        );
-    } 
+    public List<TransaksiRecord> ambilByWorker(String workerUsername) throws Exception {
+        List<TransaksiRecord> list = new ArrayList<>();
+        String sql = "SELECT * FROM transaksi WHERE worker_username = ? AND jenis_layanan = 'JOKI' ORDER BY id DESC";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, workerUsername);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                list.add(mapRow(rs));
+            }
+        }
+        return list;
+    } // Melvian yang push
+
 
     public void assignWorker(int idTransaksi, String workerUsername) throws Exception {
         String sql = "UPDATE transaksi SET worker_username = ? WHERE id = ?";
@@ -88,4 +88,20 @@ public class TransaksiRepository implements BaseRepository<TransaksiRecord> {
             stmt.executeUpdate();
         }
     }
+
+    private TransaksiRecord mapRow(ResultSet rs) throws Exception {
+        return new TransaksiRecord(
+            rs.getInt("id"),
+            rs.getString("customer_username"),
+            rs.getString("worker_username"),
+            rs.getString("jenis_layanan"),
+            rs.getString("nama_game"),
+            rs.getString("id_akun_game"),
+            rs.getString("detail_pesanan"),
+            rs.getDouble("total_harga"),
+            rs.getString("metode_pembayaran"),
+            rs.getString("nomor_virtual"),
+            rs.getString("status")
+        );
+    } 
 }
