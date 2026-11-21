@@ -5,7 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.crypto.Data;
+
 import tubes.config.DatabaseConnection;
+import tubes.exception.TransactionException;
 import tubes.model.TransaksiRecord;
 
 public class TransaksiRepository implements BaseRepository<TransaksiRecord> {
@@ -59,6 +63,19 @@ public class TransaksiRepository implements BaseRepository<TransaksiRecord> {
         return list;
     } // Melvian yang push
 
+    public List<TransaksiRecord> ambilByCustomer(String customerUsername) throws Exception{
+        List<TransaksiRecord> list = new ArrayList<>();
+        String sql = "SELECT * FROM transaksi ORDER BY DESC";
+
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()){
+                while (rs.next()) {
+                    list.add(mapRow(rs));
+                }
+            }
+        return list;
+    }
 
     public void assignWorker(int idTransaksi, String workerUsername) throws Exception {
         String sql = "UPDATE transaksi SET worker_username = ? WHERE id = ?";
