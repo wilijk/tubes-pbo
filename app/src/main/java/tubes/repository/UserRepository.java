@@ -61,8 +61,8 @@ public class UserRepository {
         List<String> workers = new ArrayList<>();
         String sql = "SELECT username FROM users WHERE role = 'WORKER'";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 workers.add(rs.getString("username"));
             }
