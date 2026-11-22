@@ -14,8 +14,8 @@ public class TransaksiRecord {
     private String status;
 
     public TransaksiRecord(int id, String customerUsername, String workerUsername, String jenisLayanan,
-                           String namaGame, String idAkunGame, String detailPesanan, double totalHarga,
-                           String metodePembayaran, String nomorVirtual, String status) {
+            String namaGame, String idAkunGame, String detailPesanan, double totalHarga,
+            String metodePembayaran, String nomorVirtual, String status) {
         this.id = id;
         this.customerUsername = customerUsername;
         this.workerUsername = workerUsername;
@@ -29,15 +29,47 @@ public class TransaksiRecord {
         this.status = status;
     }
 
-    public int getId() { return id; }
-    public String getCustomerUsername() { return customerUsername; }
-    public String getWorkerUsername() { return workerUsername; }
-    public String getJenisLayanan() { return jenisLayanan; }
-    public String getNamaGame() { return namaGame; }
-    public String getIdAkunGame() { return idAkunGame; }
-    public String getDetailPesanan() { return detailPesanan; }
-    public double getTotalHarga() { return totalHarga; }
-    public String getMetodePembayaran() { return metodePembayaran; }
-    public String getNomorVirtual() { return nomorVirtual; }
-    public String getStatus() { return status; }
+    public int getId() {
+        return id;
+    }
+
+    public String getCustomerUsername() {
+        return customerUsername;
+    }
+
+    public String getWorkerUsername() {
+        return workerUsername;
+    }
+
+    public String getJenisLayanan() {
+        return jenisLayanan;
+    }
+
+    public String getNamaGame() {
+        return namaGame;
+    }
+
+    public String getIdAkunGame() {
+        return idAkunGame;
+    }
+
+    public String getDetailPesanan() {
+        return detailPesanan;
+    }
+
+    public double getTotalHarga() {
+        return totalHarga;
+    }
+
+    public String getMetodePembayaran() {
+        return metodePembayaran;
+    }
+
+    public String getNomorVirtual() {
+        return nomorVirtual;
+    }
+
+    public String getStatus() {
+        return status;
+    }
 }
