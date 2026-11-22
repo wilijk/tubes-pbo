@@ -14,3 +14,8 @@ db.properties
 #ignore config
 app/src/main/java/tubes/config/AppConfig.java
 
+# Java compiled files
+*.class
+
+# Build output
+app/bin/
