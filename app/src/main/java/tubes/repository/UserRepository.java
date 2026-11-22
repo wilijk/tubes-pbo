@@ -9,7 +9,7 @@ import tubes.exception.TransactionException;
 import tubes.model.User;
 import tubes.model.enumm.Role;
 
-public class UserRepostory {
+public class UserRepository {
 
     public void registerCustomer(String username, String password, String confirmPassword) throws Exception {
         if (username == null || username.trim().isEmpty() || password == null || password.trim().isEmpty())
