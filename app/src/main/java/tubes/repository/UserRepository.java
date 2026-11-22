@@ -3,6 +3,8 @@ package tubes.repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import tubes.config.DatabaseConnection;
 import tubes.exception.TransactionException;
@@ -53,5 +55,18 @@ public class UserRepository {
                 throw new TransactionException("Username atau password salah!");
             }
         }
+    }
+
+    public List<String> getAllWorkers() throws Exception {
+        List<String> workers = new ArrayList<>();
+        String sql = "SELECT username FROM users WHERE role = 'WORKER'";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                workers.add(rs.getString("username"));
+            }
+        }
+        return workers;
     }
 }
