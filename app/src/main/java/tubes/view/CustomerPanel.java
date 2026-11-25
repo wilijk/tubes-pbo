@@ -1,7 +1,9 @@
 package tubes.view;
 
 import java.awt.*;
+
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -12,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
+
 import tubes.config.SessionManager;
 import tubes.controller.AuthController;
 import tubes.controller.CustomerController;
@@ -76,7 +79,7 @@ public class CustomerPanel extends JPanel {
         lblWelcome.setFont(new Font("SansSerif", Font.BOLD, 16));
 
         JPanel rightHeader = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton btnKeRiwayatGlobal = new JButton("Riwayat Transaksi");
+        JButton btnKeRiwayatGlobal = new JButton("Riwayat Pesanan");
         JButton btnLogout = new JButton("Logout");
         rightHeader.add(btnKeRiwayatGlobal);
         rightHeader.add(btnLogout);
@@ -113,22 +116,31 @@ public class CustomerPanel extends JPanel {
 
         JLabel lblTitle = new JLabel("Pilih Layanan yang Anda Butuhkan");
         lblTitle.setFont(new Font("SansSerif", Font.BOLD, 20));
-        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
         panel.add(lblTitle, gbc);
 
         gbc.gridwidth = 1;
         JButton btnJoki = new JButton("JASA JOKI AKUN");
         btnJoki.setFont(new Font("SansSerif", Font.BOLD, 15));
-        gbc.gridx = 0; gbc.gridy = 1; gbc.ipady = 30; gbc.ipadx = 30;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.ipady = 30;
+        gbc.ipadx = 30;
         panel.add(btnJoki, gbc);
 
         JButton btnTopup = new JButton("TOP UP GAME");
         btnTopup.setFont(new Font("SansSerif", Font.BOLD, 15));
-        gbc.gridx = 1; gbc.gridy = 1;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
         panel.add(btnTopup, gbc);
 
         JButton btnRiwayat = new JButton("Lihat Riwayat Pesanan Saya");
-        gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 2; gbc.ipady = 10;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        gbc.ipady = 10;
         panel.add(btnRiwayat, gbc);
 
         btnJoki.addActionListener(e -> {
@@ -158,22 +170,31 @@ public class CustomerPanel extends JPanel {
 
         lblJudulPilihGame = new JLabel("Pilih Game");
         lblJudulPilihGame.setFont(new Font("SansSerif", Font.BOLD, 20));
-        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
         panel.add(lblJudulPilihGame, gbc);
 
         gbc.gridwidth = 1;
         JButton btnML = new JButton("Mobile Legends");
         btnML.setFont(new Font("SansSerif", Font.BOLD, 15));
-        gbc.gridx = 0; gbc.gridy = 1; gbc.ipady = 30; gbc.ipadx = 30;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.ipady = 30;
+        gbc.ipadx = 30;
         panel.add(btnML, gbc);
 
         JButton btnGenshin = new JButton("Genshin Impact");
         btnGenshin.setFont(new Font("SansSerif", Font.BOLD, 15));
-        gbc.gridx = 1; gbc.gridy = 1;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
         panel.add(btnGenshin, gbc);
 
         JButton btnKembali = new JButton("Kembali");
-        gbc.gridx = 0; gbc.gridy = 2; gbc.ipady = 8; gbc.ipadx = 15;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.ipady = 8;
+        gbc.ipadx = 15;
         panel.add(btnKembali, gbc);
 
         JButton btnRiwayat = new JButton("Ke Halaman Riwayat");
@@ -278,7 +299,7 @@ public class CustomerPanel extends JPanel {
         lblVirtualNumber.setFont(new Font("SansSerif", Font.BOLD, 14));
 
         JButton btnCekHarga = new JButton("Hitung Total Harga");
-        btnBayar = new JButton("Bayar Sekarang (Simulasi 5 Detik)");
+        btnBayar = new JButton("Bayar Sekarang");
 
         bayarPanel.add(new JLabel("Pilih Kategori Pembayaran:"));
         bayarPanel.add(cbKategoriBayar);

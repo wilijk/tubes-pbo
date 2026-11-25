@@ -13,9 +13,7 @@ public class TransaksiRecord {
     private String nomorVirtual;
     private String status;
 
-    public TransaksiRecord(int id, String customerUsername, String workerUsername, String jenisLayanan,
-            String namaGame, String idAkunGame, String detailPesanan, double totalHarga,
-            String metodePembayaran, String nomorVirtual, String status) {
+    public TransaksiRecord(int id, String customerUsername, String workerUsername, String jenisLayanan, String namaGame, String idAkunGame, String detailPesanan, double totalHarga, String metodePembayaran, String nomorVirtual, String status) {
         this.id = id;
         this.customerUsername = customerUsername;
         this.workerUsername = workerUsername;
