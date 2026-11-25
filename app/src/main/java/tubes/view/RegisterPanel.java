@@ -20,7 +20,7 @@ public class RegisterPanel extends JPanel {
 
     public RegisterPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
-        this.authController = authController;
+        this.authController = new AuthController(); // perubahan
         setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();

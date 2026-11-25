@@ -18,5 +18,6 @@ public abstract class Layanan implements Calculable {
     public String getIdAkunGame() { return idAkunGame; }
 
     public abstract String getJenisLayanan();
+    
     public abstract String getDeskripsiLayanan();
 }
