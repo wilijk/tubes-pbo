@@ -10,8 +10,8 @@ public class JokiML extends Joki {
     private int bintangTarget;
 
     public JokiML(String customerUsername, String idAkunGame,
-                  RankTier rankAwal, int divisiAwal, int bintangAwal,
-                  RankTier rankTarget, int divisiTarget, int bintangTarget) {
+                RankTier rankAwal, int divisiAwal, int bintangAwal,
+                RankTier rankTarget, int divisiTarget, int bintangTarget) {
         super(customerUsername, "Mobile Legends", idAkunGame);
         this.rankAwal = rankAwal;
         this.divisiAwal = divisiAwal;

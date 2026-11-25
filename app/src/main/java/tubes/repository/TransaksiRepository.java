@@ -61,11 +61,11 @@ public class TransaksiRepository implements BaseRepository<TransaksiRecord> {
             }
         }
         return list;
-    } // Melvian yang push
+    } 
 
     public List<TransaksiRecord> ambilByCustomer(String customerUsername) throws Exception{
         List<TransaksiRecord> list = new ArrayList<>();
-        String sql = "SELECT * FROM transaksi ORDER BY DESC";
+        String sql = "SELECT * FROM transaksi ORDER BY id DESC";
 
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
